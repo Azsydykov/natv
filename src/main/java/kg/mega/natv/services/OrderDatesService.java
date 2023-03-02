@@ -1,4 +1,7 @@
 package kg.mega.natv.services;
 
-public interface OrderDatesService {
+import kg.mega.natv.models.dto.ChannelDto;
+
+public interface OrderDatesService extends BaseService<ChannelDto>{
+    
 }

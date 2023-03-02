@@ -12,12 +12,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "tb_banner_ad")
-public class BannerAd {
+@Table(name = "tb_channel_order")
+public class ChannelOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    String filePath;
-
+    @ManyToOne
+    Channel channel;
+    @ManyToOne
+    Order order;
+    int daysCount;
 }

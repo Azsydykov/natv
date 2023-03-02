@@ -30,8 +30,6 @@ public class Order {
     double totalPrice;
     @ManyToOne
     TextAd text;
-    @ManyToOne
-    BannerAd banner;
 
     @PrePersist
     protected void onCreate() {

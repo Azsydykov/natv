@@ -1,14 +1,19 @@
-package kg.mega.natv.models.dto;
+package kg.mega.natv.models.responses;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-@Getter
+import java.util.Date;
+
 @Setter
+@Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BannerAdDto {
+public class DiscountResponse  {
+
     Long id;
-    String filePath;
+    int discountDays;
+    int discount;
+
 }

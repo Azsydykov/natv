@@ -23,7 +23,6 @@ public class Price {
     @ManyToOne
     Channel channel;
     double pricePerSymbol;
-    double bannerPrice;
     Date startDate;
     Date endDate;
 

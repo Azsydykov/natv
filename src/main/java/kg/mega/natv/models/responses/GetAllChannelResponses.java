@@ -1,13 +1,12 @@
 package kg.mega.natv.models.responses;
 
-import kg.mega.natv.models.entities.Channel;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -19,10 +18,11 @@ public class GetAllChannelResponses implements Comparable<GetAllChannelResponses
     Date createdDate;
     boolean active;
     String logoPath;
+    List<DiscountResponse> discounts;
 
 
     @Override
-    public int compareTo(GetAllChannelResponses o) {
-        return this.channelName.compareTo(o.channelName);
+    public int compareTo(GetAllChannelResponses channelResponses) {
+        return this.channelName.compareTo(channelResponses.channelName);
     }
 }

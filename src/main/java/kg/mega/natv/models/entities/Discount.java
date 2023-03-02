@@ -23,6 +23,12 @@ public class Discount {
     Date endDate;
     int discountDays;
     int discount;
+    boolean active;
     @ManyToOne
     Channel channel;
+
+    @PrePersist
+    protected void onCreate() {
+        active=true;
+    }
 }

@@ -76,4 +76,21 @@ public class ChannelServiceImpl implements ChannelService {
 
         return channelResponses;
     }
+
+    @Override
+    public ChannelDto findById(Long id) {
+        return channelMapper.toDto(channelRep.findById(id).orElseThrow(()-> new RuntimeException("Channel not found!")));
+    }
+
+    @Override
+    public ChannelDto delete(Long id) {
+        ChannelDto channelDto = new ChannelDto();
+        channelDto.setActive(false);
+        return save(channelDto);
+    }
+
+    @Override
+    public List<ChannelDto> findAll() {
+        return channelMapper.toDtos(channelRep.findAll());
+    }
 }

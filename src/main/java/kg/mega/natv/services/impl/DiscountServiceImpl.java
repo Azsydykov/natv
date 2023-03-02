@@ -1,7 +1,6 @@
 package kg.mega.natv.services.impl;
 
 import kg.mega.natv.dao.DiscountRep;
-import kg.mega.natv.mappers.ChannelMapper;
 import kg.mega.natv.mappers.DiscountMapper;
 import kg.mega.natv.models.dto.DiscountDto;
 import kg.mega.natv.models.entities.Channel;
@@ -25,6 +24,29 @@ public class DiscountServiceImpl implements DiscountService {
     public DiscountServiceImpl( DiscountRep discountRep) {
         this.discountRep = discountRep;
     }
+
+    @Override
+    public DiscountDto save(DiscountDto discountDto) {
+        return discountMapper.toDto(discountRep.save(discountMapper.toEntity(discountDto)));
+    }
+
+    @Override
+    public DiscountDto findById(Long id) {
+        return discountMapper.toDto(discountRep.findById(id).orElseThrow(()->new RuntimeException("Discount not found!")));
+    }
+
+    @Override
+    public DiscountDto delete(Long id) {
+        DiscountDto discountDto = new DiscountDto();
+        discountDto.setActive(false);
+        return save(discountDto);
+    }
+
+    @Override
+    public List<DiscountDto> findAll() {
+        return discountMapper.toDtos(discountRep.findAll());
+    }
+
 
     @Override
     public List<DiscountDto> saveAll(List<DiscountDto> discounts, Channel channel) {

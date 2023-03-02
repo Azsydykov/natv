@@ -6,7 +6,7 @@ import kg.mega.natv.models.entities.Discount;
 
 import java.util.List;
 
-public interface DiscountService {
+public interface DiscountService extends BaseService<DiscountDto>{
 
     List<DiscountDto> saveAll(List<DiscountDto> discounts, Channel channel);
     List<Discount> toDiscountList(List<DiscountDto> discounts, Channel channel);

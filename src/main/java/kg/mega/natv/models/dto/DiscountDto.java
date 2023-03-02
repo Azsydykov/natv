@@ -19,5 +19,6 @@ public class DiscountDto {
     @JsonProperty("discount_days")
     int discountDays;
     int discount;
+    boolean active;
  //   Channel channel;
 }

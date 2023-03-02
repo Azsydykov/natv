@@ -1,22 +1,22 @@
 package kg.mega.natv.models.dto;
 
 import kg.mega.natv.models.entities.Channel;
+import kg.mega.natv.models.entities.Order;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.ManyToOne;
-import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PriceDto {
+public class ChannelOrderDto {
     Long id;
     Channel channel;
-    double pricePerSymbol;
-    Date startDate;
-    Date endDate;
+    Order order;
+    int daysCount;
+
 }
