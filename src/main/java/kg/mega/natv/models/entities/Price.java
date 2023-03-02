@@ -30,5 +30,6 @@ public class Price {
     @PrePersist
     protected void onCreate() {
         startDate = new Date();
+        active = true;
     }
 }

@@ -1,5 +1,6 @@
 package kg.mega.natv.models.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import kg.mega.natv.models.entities.Channel;
 import lombok.AccessLevel;
@@ -19,6 +20,7 @@ public class DiscountDto {
     @JsonProperty("discount_days")
     int discountDays;
     int discount;
+    @JsonIgnore
     boolean active;
  //   Channel channel;
 }

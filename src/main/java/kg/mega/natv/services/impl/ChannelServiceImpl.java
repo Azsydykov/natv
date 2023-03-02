@@ -3,15 +3,18 @@ package kg.mega.natv.services.impl;
 import kg.mega.natv.dao.ChannelRep;
 import kg.mega.natv.mappers.ChannelMapper;
 import kg.mega.natv.models.dto.ChannelDto;
+import kg.mega.natv.models.dto.DiscountDto;
 import kg.mega.natv.models.entities.Channel;
+import kg.mega.natv.models.entities.Discount;
+import kg.mega.natv.models.responses.DiscountResponse;
 import kg.mega.natv.models.responses.GetAllChannelResponses;
 import kg.mega.natv.services.ChannelService;
 import kg.mega.natv.services.DiscountService;
 import kg.mega.natv.services.PriceService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,12 +24,11 @@ public class ChannelServiceImpl implements ChannelService {
 
     ChannelMapper channelMapper = ChannelMapper.INSTANCE;
 
-//    private final ChannelMapper channelMapper;
     private final ChannelRep channelRep;
     private final DiscountService discountService;
     private final PriceService priceService;
 
-    public ChannelServiceImpl( ChannelRep channelRep,
+    public ChannelServiceImpl(ChannelRep channelRep,
                               DiscountService discountService, PriceService priceService) {
         this.channelRep = channelRep;
         this.discountService = discountService;
@@ -45,7 +47,6 @@ public class ChannelServiceImpl implements ChannelService {
 
         channelDto.setDiscounts(discountService.saveAll(channelDto.getDiscounts(), channel));
 
-
         return channelDto;
     }
 
@@ -60,6 +61,7 @@ public class ChannelServiceImpl implements ChannelService {
 
         List<GetAllChannelResponses> channelResponseList = channelsList.stream()
                 .map(x -> getChannelResponse(x))
+                .filter(x -> x.isActive() == true)
                 .collect(Collectors.toList());
 
         Collections.sort(channelResponseList);
@@ -67,19 +69,23 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     private GetAllChannelResponses getChannelResponse(ChannelDto x) {
+        List<DiscountDto> discountDtoList = discountService.findAllDiscount(x.getId());
+        List<DiscountResponse> discountResponseList = new ArrayList(discountDtoList);
+
         GetAllChannelResponses channelResponses = new GetAllChannelResponses();
         channelResponses.setId(x.getId());
         channelResponses.setChannelName(x.getChannelName());
         channelResponses.setActive(x.isActive());
         channelResponses.setCreatedDate(new Date());
         channelResponses.setLogoPath(x.getLogoPath());
+        channelResponses.setDiscounts(discountResponseList);
 
         return channelResponses;
     }
 
     @Override
     public ChannelDto findById(Long id) {
-        return channelMapper.toDto(channelRep.findById(id).orElseThrow(()-> new RuntimeException("Channel not found!")));
+        return channelMapper.toDto(channelRep.findById(id).orElseThrow(() -> new RuntimeException("Channel not found!")));
     }
 
     @Override

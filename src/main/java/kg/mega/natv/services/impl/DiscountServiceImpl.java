@@ -5,6 +5,7 @@ import kg.mega.natv.mappers.DiscountMapper;
 import kg.mega.natv.models.dto.DiscountDto;
 import kg.mega.natv.models.entities.Channel;
 import kg.mega.natv.models.entities.Discount;
+import kg.mega.natv.models.responses.DiscountResponse;
 import kg.mega.natv.services.DiscountService;
 import kg.mega.natv.util.DateUtil;
 import org.springframework.stereotype.Service;
@@ -76,5 +77,10 @@ public class DiscountServiceImpl implements DiscountService {
         discount.setStartDate(new Date());
         discount.setEndDate(DateUtil.getInstance().getEndDate());
         return discount;
+    }
+
+    @Override
+    public List<DiscountDto> findAllDiscount(Long id) {
+        return discountMapper.toDtos(discountRep.findAllDiscount(id));
     }
 }

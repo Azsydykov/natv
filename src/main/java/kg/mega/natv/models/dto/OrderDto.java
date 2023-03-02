@@ -20,5 +20,5 @@ public class OrderDto {
     ChannelDto channel;
     double totalPrice;
     TextAdDto text;
-    BannerAd banner;
+
 }
