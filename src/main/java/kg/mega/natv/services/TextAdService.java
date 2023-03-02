@@ -1,4 +1,6 @@
 package kg.mega.natv.services;
 
-public interface TextAdService {
+import kg.mega.natv.models.dto.TextAdDto;
+
+public interface TextAdService extends BaseService<TextAdDto> {
 }

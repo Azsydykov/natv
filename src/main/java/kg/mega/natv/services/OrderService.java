@@ -1,4 +1,6 @@
 package kg.mega.natv.services;
 
-public interface OrderService {
+import kg.mega.natv.models.dto.OrderDto;
+
+public interface OrderService extends BaseService<OrderDto>{
 }

@@ -41,7 +41,7 @@ public class ChannelServiceImpl implements ChannelService {
         channelDto.setId(channel.getId());
 
         //создаем цену
-        priceService.save(channelDto.getPricePerLetter(), channel);
+        priceService.create(channelDto.getPricePerLetter(), channel);
 
         channelDto.setDiscounts(discountService.saveAll(channelDto.getDiscounts(), channel));
 

@@ -18,7 +18,6 @@ public class DiscountServiceImpl implements DiscountService {
 
     DiscountMapper discountMapper = DiscountMapper.INSTANCE;
 
-//    private final DiscountMapper discountMapper;
     private final DiscountRep discountRep;
 
     public DiscountServiceImpl( DiscountRep discountRep) {

@@ -25,6 +25,7 @@ public class Price {
     double pricePerSymbol;
     Date startDate;
     Date endDate;
+    boolean active;
 
     @PrePersist
     protected void onCreate() {

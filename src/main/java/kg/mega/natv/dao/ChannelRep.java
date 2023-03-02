@@ -1,6 +1,5 @@
 package kg.mega.natv.dao;
 
-import kg.mega.natv.models.dto.ChannelDto;
 import kg.mega.natv.models.entities.Channel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

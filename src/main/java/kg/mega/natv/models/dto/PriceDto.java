@@ -19,4 +19,5 @@ public class PriceDto {
     double pricePerSymbol;
     Date startDate;
     Date endDate;
+    boolean active;
 }
