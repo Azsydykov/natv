@@ -4,9 +4,10 @@ import kg.mega.natv.dao.ChannelOrderRep;
 import kg.mega.natv.mappers.ChannelOrderMapper;
 import kg.mega.natv.models.dto.ChannelOrderDto;
 import kg.mega.natv.services.ChannelOrderService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ChannelOrderServiceImpl implements ChannelOrderService {
 
     ChannelOrderMapper channelOrderMapper = ChannelOrderMapper.INSTANCE;
@@ -23,7 +24,7 @@ public class ChannelOrderServiceImpl implements ChannelOrderService {
 
     @Override
     public ChannelOrderDto findById(Long id) {
-        return channelOrderMapper.toDto(channelOrderRep.findById(id).orElseThrow(()->new RuntimeException("ChannelOrder not found!")));
+        return channelOrderMapper.toDto(channelOrderRep.findById(id).orElseThrow(()-> new RuntimeException("ChannelOrder not found!")));
     }
 
     @Override

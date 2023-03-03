@@ -3,6 +3,7 @@ package kg.mega.natv.controllers.v1;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import kg.mega.natv.models.dto.ChannelDto;
+import kg.mega.natv.models.dto.PriceDto;
 import kg.mega.natv.models.responses.GetAllChannelResponses;
 import kg.mega.natv.services.ChannelService;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,26 @@ public class ChannelController {
         return channelService.save(channelDto);
     }
 
-    @GetMapping("/getAllChannels")
+    @GetMapping("/findById")
+    @ApiOperation("Поиск по id")
+    ResponseEntity<?> findById(@RequestParam Long id) {
+        return ResponseEntity.ok(channelService.findById(id));
+    }
+
+    @GetMapping("/findAll")
     @ApiOperation("Вывод всех каналов")
+    ResponseEntity<List<ChannelDto>> findAll(){
+        return ResponseEntity.ok(channelService.findAll());
+    }
+
+    @DeleteMapping("/delete")
+    @ApiOperation("Удаление")
+    ResponseEntity<?> delete(@RequestParam Long id) {
+        return ResponseEntity.ok(channelService.delete(id));
+    }
+
+    @GetMapping("/getAllChannels")
+    @ApiOperation("Вывод всех каналов (limit/offset)")
     ResponseEntity<List<GetAllChannelResponses>> getAllChannels(@RequestParam int limit, @RequestParam int offset) {
         return ResponseEntity.ok(channelService.getAllChannels(limit, offset));
     }
