@@ -3,6 +3,7 @@ package kg.mega.natv.controllers.v1;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import kg.mega.natv.models.dto.PriceDto;
+import kg.mega.natv.models.request.PriceRequest;
 import kg.mega.natv.services.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,18 +38,21 @@ public class PriceController {
 
     @GetMapping("/findAll")
     @ApiOperation("Вывод всех цен")
-    ResponseEntity<List<PriceDto>> findAll(){
+    ResponseEntity<List<PriceDto>> findAll() {
         return ResponseEntity.ok(priceService.findAll());
     }
 
-@DeleteMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation("Удаление цены")
-    ResponseEntity<?> delete(@RequestParam Long id){
+    ResponseEntity<?> delete(@RequestParam Long id) {
         return ResponseEntity.ok(priceService.delete(id));
-}
+    }
 
-
-
+    @PostMapping("/getPrice")
+    @ApiOperation("Получение цены")
+    ResponseEntity<?> getPrice(@ModelAttribute PriceRequest priceRequest) {
+        return new ResponseEntity<>(priceService.getPriceResponse(priceRequest), HttpStatus.CREATED);
+    }
 
 
 }

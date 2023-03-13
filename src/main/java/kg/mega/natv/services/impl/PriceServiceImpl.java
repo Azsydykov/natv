@@ -1,27 +1,37 @@
 package kg.mega.natv.services.impl;
 
+import kg.mega.natv.dao.DiscountRep;
 import kg.mega.natv.dao.PriceRep;
 import kg.mega.natv.mappers.PriceMapper;
+import kg.mega.natv.models.dto.DiscountDto;
 import kg.mega.natv.models.dto.PriceDto;
 import kg.mega.natv.models.entities.Channel;
+import kg.mega.natv.models.entities.Discount;
 import kg.mega.natv.models.entities.Price;
+import kg.mega.natv.models.request.PriceRequest;
+import kg.mega.natv.models.responses.PriceResponse;
+import kg.mega.natv.services.DiscountService;
 import kg.mega.natv.services.PriceService;
 import kg.mega.natv.util.DateUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PriceServiceImpl implements PriceService {
     PriceMapper priceMapper = PriceMapper.INSTANCE;
 
-//    private final PriceMapper priceMapper;
     private final PriceRep priceRep;
+    private final DiscountService discountService;
 
-    public PriceServiceImpl( PriceRep priceRep) {
 
+    public PriceServiceImpl(PriceRep priceRep, DiscountService discountService) {
         this.priceRep = priceRep;
+        this.discountService = discountService;
     }
 
     @Override
@@ -48,7 +58,7 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public PriceDto findById(Long id) {
-        return priceMapper.toDto(priceRep.findById(id).orElseThrow(()->new RuntimeException("Price not found!")));
+        return priceMapper.toDto(priceRep.findById(id).orElseThrow(() -> new RuntimeException("Price not found!")));
     }
 
     @Override
@@ -62,4 +72,56 @@ public class PriceServiceImpl implements PriceService {
     public List<PriceDto> findAll() {
         return priceMapper.toDtos(priceRep.findAll());
     }
+
+    @Override
+    public PriceResponse getPriceResponse(PriceRequest priceRequest) {
+        PriceDto priceDto = findById(priceRequest.getChannelId());
+        List<DiscountDto> discountList = discountService.findDiscountByChannelId(priceRequest.getChannelId());
+        List<DiscountDto> sortedDiscountList = discountList
+                .stream()
+                .sorted(Comparator.comparing(DiscountDto::getDiscountDays)
+                        .reversed())
+                .collect(Collectors.toList());
+
+        double pricePerSymbol = priceDto.getPricePerSymbol();
+        String text = priceRequest.getText();
+        int textCount = getSymbolCount(text);
+        int days = priceRequest.getDaysCount();
+        double totalPrice = 0;
+        double priceWithDiscount = 0;
+
+        if (discountList.isEmpty() || priceRequest.getDaysCount() < sortedDiscountList.get(sortedDiscountList.size() -1).getDiscountDays()) {
+            totalPrice = textCount * pricePerSymbol * days;
+        } else {
+            for (DiscountDto item : sortedDiscountList) {
+
+                if (priceRequest.getDaysCount() >= item.getDiscountDays()) {
+
+                    totalPrice = (textCount * pricePerSymbol * days);
+                    double diffPrice = (textCount * pricePerSymbol * days * item.getDiscount()) / 100;
+                    priceWithDiscount = totalPrice - diffPrice;
+                    break;
+                }
+            }
+        }
+        PriceResponse priceResponse = new PriceResponse();
+        priceResponse.setText(priceRequest.getText());
+        priceResponse.setChannelId(priceRequest.getChannelId());
+        priceResponse.setDaysCount(priceRequest.getDaysCount());
+        priceResponse.setPrice(totalPrice);
+        priceResponse.setPriceWithDiscount(priceWithDiscount);
+
+        return priceResponse;
+    }
+
+    int getSymbolCount(String text) {
+        int countWithoutSpaсes = 0;
+        for (char element : text.toCharArray()) {
+            if (element == ' ') {
+                continue;
+            } else countWithoutSpaсes++;
+        }
+        return countWithoutSpaсes;
+    }
+
 }

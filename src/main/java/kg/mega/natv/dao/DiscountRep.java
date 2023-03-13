@@ -15,5 +15,7 @@ public interface DiscountRep extends JpaRepository<Discount, Long> {
     @Query(value = "select * from tb_discount WHERE channel_id=:id", nativeQuery = true)
     List<Discount> findAllDiscount(Long id);
 
+    List<Discount> findDiscountByChannelId(Long id);
+
 
 }

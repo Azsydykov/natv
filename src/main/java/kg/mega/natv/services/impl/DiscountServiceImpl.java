@@ -83,4 +83,9 @@ public class DiscountServiceImpl implements DiscountService {
     public List<DiscountDto> findAllDiscount(Long id) {
         return discountMapper.toDtos(discountRep.findAllDiscount(id));
     }
+
+    @Override
+    public List<DiscountDto> findDiscountByChannelId(Long channelId) {
+        return discountMapper.toDtos(discountRep.findDiscountByChannelId(channelId));
+    }
 }

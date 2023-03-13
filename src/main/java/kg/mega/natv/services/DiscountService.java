@@ -7,9 +7,13 @@ import kg.mega.natv.models.responses.DiscountResponse;
 
 import java.util.List;
 
-public interface DiscountService extends BaseService<DiscountDto>{
+public interface DiscountService extends BaseService<DiscountDto> {
 
     List<DiscountDto> saveAll(List<DiscountDto> discounts, Channel channel);
+
     List<Discount> toDiscountList(List<DiscountDto> discounts, Channel channel);
+
     List<DiscountDto> findAllDiscount(Long id);
+
+    List<DiscountDto> findDiscountByChannelId(Long id);
 }
