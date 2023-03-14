@@ -1,28 +1,29 @@
 package kg.mega.natv.services.impl;
 
-import kg.mega.natv.dao.DiscountRep;
 import kg.mega.natv.dao.PriceRep;
 import kg.mega.natv.mappers.PriceMapper;
+import kg.mega.natv.models.dto.ChannelDto;
 import kg.mega.natv.models.dto.DiscountDto;
 import kg.mega.natv.models.dto.PriceDto;
 import kg.mega.natv.models.entities.Channel;
-import kg.mega.natv.models.entities.Discount;
 import kg.mega.natv.models.entities.Price;
 import kg.mega.natv.models.request.PriceRequest;
 import kg.mega.natv.models.responses.PriceResponse;
+import kg.mega.natv.services.ChannelService;
 import kg.mega.natv.services.DiscountService;
 import kg.mega.natv.services.PriceService;
 import kg.mega.natv.util.DateUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PriceServiceImpl implements PriceService {
+public class PriceServiceImpl implements PriceService{
     PriceMapper priceMapper = PriceMapper.INSTANCE;
 
     private final PriceRep priceRep;
@@ -77,11 +78,11 @@ public class PriceServiceImpl implements PriceService {
     public PriceResponse getPriceResponse(PriceRequest priceRequest) {
         PriceDto priceDto = findById(priceRequest.getChannelId());
         List<DiscountDto> discountList = discountService.findDiscountByChannelId(priceRequest.getChannelId());
-        List<DiscountDto> sortedDiscountList = discountList
-                .stream()
+        List<DiscountDto> sortedDiscountList = discountList.stream()
                 .sorted(Comparator.comparing(DiscountDto::getDiscountDays)
                         .reversed())
                 .collect(Collectors.toList());
+
 
         double pricePerSymbol = priceDto.getPricePerSymbol();
         String text = priceRequest.getText();
@@ -90,7 +91,7 @@ public class PriceServiceImpl implements PriceService {
         double totalPrice = 0;
         double priceWithDiscount = 0;
 
-        if (discountList.isEmpty() || priceRequest.getDaysCount() < sortedDiscountList.get(sortedDiscountList.size() -1).getDiscountDays()) {
+        if (discountList.isEmpty() || priceRequest.getDaysCount() < sortedDiscountList.get(sortedDiscountList.size() - 1).getDiscountDays()) {
             totalPrice = textCount * pricePerSymbol * days;
         } else {
             for (DiscountDto item : sortedDiscountList) {
