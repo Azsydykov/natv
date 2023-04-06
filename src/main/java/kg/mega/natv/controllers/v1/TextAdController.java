@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Api(tags = "Текст")
@@ -28,7 +29,7 @@ public class TextAdController {
 
     @PostMapping("/save")
     @ApiOperation("Сохранение")
-    ResponseEntity<?> save(@RequestBody TextAdDto textAdDto) {
+    ResponseEntity<?> save(@Valid @RequestBody TextAdDto textAdDto) {
         return new ResponseEntity<>(textAdService.save(textAdDto), HttpStatus.CREATED);
     }
 

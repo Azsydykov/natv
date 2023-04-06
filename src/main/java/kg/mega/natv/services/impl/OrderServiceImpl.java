@@ -4,18 +4,18 @@ import kg.mega.natv.dao.OrderRep;
 import kg.mega.natv.mappers.OrderMapper;
 import kg.mega.natv.models.dto.OrderDto;
 import kg.mega.natv.services.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     OrderMapper orderMapper = OrderMapper.INSTANCE;
     private final OrderRep orderRep;
 
-    public OrderServiceImpl(OrderRep orderRep) {
-        this.orderRep = orderRep;
-    }
+
 
     @Override
     public OrderDto save(OrderDto orderDto) {

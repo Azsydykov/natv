@@ -9,6 +9,7 @@ import kg.mega.natv.services.ChannelService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Api(tags = "Канал")
@@ -23,7 +24,7 @@ public class ChannelController {
     }
 
     @PostMapping("/save")
-    public ChannelDto save(@RequestBody ChannelDto channelDto) {
+    public ChannelDto save(@Valid @RequestBody ChannelDto channelDto) {
         return channelService.save(channelDto);
     }
 

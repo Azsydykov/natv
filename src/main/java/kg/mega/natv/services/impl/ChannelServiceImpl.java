@@ -11,6 +11,7 @@ import kg.mega.natv.models.responses.GetAllChannelResponses;
 import kg.mega.natv.services.ChannelService;
 import kg.mega.natv.services.DiscountService;
 import kg.mega.natv.services.PriceService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ChannelServiceImpl implements ChannelService {
 
     ChannelMapper channelMapper = ChannelMapper.INSTANCE;
@@ -28,12 +30,6 @@ public class ChannelServiceImpl implements ChannelService {
     private final DiscountService discountService;
     private final PriceService priceService;
 
-    public ChannelServiceImpl(ChannelRep channelRep,
-                              DiscountService discountService, PriceService priceService) {
-        this.channelRep = channelRep;
-        this.discountService = discountService;
-        this.priceService = priceService;
-    }
 
     @Override
     public ChannelDto save(ChannelDto channelDto) {

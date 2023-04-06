@@ -2,20 +2,19 @@ package kg.mega.natv.services.impl;
 
 import kg.mega.natv.dao.PriceRep;
 import kg.mega.natv.mappers.PriceMapper;
-import kg.mega.natv.models.dto.ChannelDto;
 import kg.mega.natv.models.dto.DiscountDto;
 import kg.mega.natv.models.dto.PriceDto;
+import kg.mega.natv.models.dto.TextAdDto;
 import kg.mega.natv.models.entities.Channel;
 import kg.mega.natv.models.entities.Price;
 import kg.mega.natv.models.request.PriceRequest;
 import kg.mega.natv.models.responses.PriceResponse;
-import kg.mega.natv.services.ChannelService;
 import kg.mega.natv.services.DiscountService;
 import kg.mega.natv.services.PriceService;
+import kg.mega.natv.services.TextAdService;
 import kg.mega.natv.util.DateUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 
 import java.util.Comparator;
 import java.util.Date;
@@ -23,17 +22,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class PriceServiceImpl implements PriceService{
     PriceMapper priceMapper = PriceMapper.INSTANCE;
 
     private final PriceRep priceRep;
     private final DiscountService discountService;
+    private final TextAdService textAdService;
 
-
-    public PriceServiceImpl(PriceRep priceRep, DiscountService discountService) {
-        this.priceRep = priceRep;
-        this.discountService = discountService;
-    }
+//так как есть аннотация @RequiredArgsConstructor, конструктор не нужен
+//    public PriceServiceImpl(PriceRep priceRep, DiscountService discountService, TextAdService textAdService) {
+//        this.priceRep = priceRep;
+//        this.discountService = discountService;
+//        this.textAdService = textAdService;
+//    }
 
     @Override
     public void create(double pricePerLetter, Channel channel) {
@@ -105,6 +107,11 @@ public class PriceServiceImpl implements PriceService{
                 }
             }
         }
+        TextAdDto textAdDto = new TextAdDto();
+        textAdDto.setSymbolCount(textCount);
+        textAdDto.setText(text);
+        textAdService.save(textAdDto);
+
         PriceResponse priceResponse = new PriceResponse();
         priceResponse.setText(priceRequest.getText());
         priceResponse.setChannelId(priceRequest.getChannelId());

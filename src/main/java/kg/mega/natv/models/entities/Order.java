@@ -4,7 +4,6 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -29,7 +28,7 @@ public class Order {
     Channel channel;
     double totalPrice;
     @ManyToOne
-    TextAd text;
+    Text text;
 
     @PrePersist
     protected void onCreate() {

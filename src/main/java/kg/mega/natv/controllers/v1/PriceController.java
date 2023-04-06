@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Api(tags = "Цена")
@@ -26,7 +27,7 @@ public class PriceController {
 
     @PostMapping("/save")
     @ApiOperation("Сохранение")
-    ResponseEntity<?> save(@RequestBody PriceDto priceDto) {
+    ResponseEntity<?> save(@Valid @RequestBody PriceDto priceDto) {
         return new ResponseEntity<>(priceService.save(priceDto), HttpStatus.CREATED);
     }
 
@@ -50,7 +51,7 @@ public class PriceController {
 
     @PostMapping("/getPrice")
     @ApiOperation("Получение цены")
-    ResponseEntity<?> getPrice(@ModelAttribute PriceRequest priceRequest) {
+    ResponseEntity<?> getPrice(@Valid @ModelAttribute PriceRequest priceRequest) {
         return new ResponseEntity<>(priceService.getPriceResponse(priceRequest), HttpStatus.CREATED);
     }
 

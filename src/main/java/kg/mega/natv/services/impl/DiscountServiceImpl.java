@@ -8,6 +8,7 @@ import kg.mega.natv.models.entities.Discount;
 import kg.mega.natv.models.responses.DiscountResponse;
 import kg.mega.natv.services.DiscountService;
 import kg.mega.natv.util.DateUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -15,15 +16,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class DiscountServiceImpl implements DiscountService {
 
     DiscountMapper discountMapper = DiscountMapper.INSTANCE;
 
     private final DiscountRep discountRep;
 
-    public DiscountServiceImpl( DiscountRep discountRep) {
-        this.discountRep = discountRep;
-    }
 
     @Override
     public DiscountDto save(DiscountDto discountDto) {

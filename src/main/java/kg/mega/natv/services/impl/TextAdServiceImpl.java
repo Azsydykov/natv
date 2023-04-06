@@ -5,18 +5,17 @@ import kg.mega.natv.mappers.OrderMapper;
 import kg.mega.natv.mappers.TextAdMapper;
 import kg.mega.natv.models.dto.TextAdDto;
 import kg.mega.natv.services.TextAdService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TextAdServiceImpl implements TextAdService {
     TextAdMapper orderMapper = TextAdMapper.INSTANCE;
     private final TextAdRep textAdRep;
 
-    public TextAdServiceImpl(TextAdRep textAdRep) {
-        this.textAdRep = textAdRep;
-    }
 
     @Override
     public TextAdDto save(TextAdDto textAdDto) {
