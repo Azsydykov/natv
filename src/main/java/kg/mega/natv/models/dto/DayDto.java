@@ -11,7 +11,7 @@ import java.util.Date;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class OrderDatesDto {
+public class DayDto {
     Long id;
     Date date;
     Order order;

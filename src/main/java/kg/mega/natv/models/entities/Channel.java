@@ -1,6 +1,8 @@
 package kg.mega.natv.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import kg.mega.natv.models.dto.DiscountDto;
+import kg.mega.natv.models.enums.ChannelStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -24,7 +26,10 @@ public class Channel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String channelName;
+    @JsonFormat(pattern = "dd.MM.yyyy HH:mm")
     Date createdDate;
+    @Enumerated(EnumType.STRING)
+    ChannelStatus channelStatus;
     boolean active;
     String logoPath;
 

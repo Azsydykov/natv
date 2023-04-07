@@ -19,8 +19,12 @@ public class ChannelOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @ManyToOne
+    @JoinColumn(name = "channel_id")
     Channel channel;
     @ManyToOne
+    @JoinColumn(name = "order_id")
     Order order;
     int daysCount;
+    double price;
+    double priceWithDiscount;
 }

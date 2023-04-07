@@ -2,10 +2,8 @@ package kg.mega.natv.controllers.v1;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import kg.mega.natv.models.dto.ChannelOrderDto;
-import kg.mega.natv.models.dto.OrderDatesDto;
-import kg.mega.natv.services.ChannelOrderService;
-import kg.mega.natv.services.OrderDatesService;
+import kg.mega.natv.models.dto.DayDto;
+import kg.mega.natv.services.DayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,20 +13,20 @@ import java.util.List;
 
 @Api(tags = "Даты заказа")
 @RestController
-@RequestMapping("/orderDates")
-public class OrderDatesController {
+@RequestMapping("/dayController")
+public class DayController {
 
-    private final OrderDatesService orderDatesService;
+    private final DayService orderDatesService;
 
     @Autowired
-    public OrderDatesController(OrderDatesService orderDatesService) {
+    public DayController(DayService orderDatesService) {
         this.orderDatesService = orderDatesService;
     }
 
 
     @PostMapping("/save")
     @ApiOperation("Сохранение")
-    ResponseEntity<?> save(@RequestBody OrderDatesDto orderDatesDto) {
+    ResponseEntity<?> save(@RequestBody DayDto orderDatesDto) {
         return new ResponseEntity<>(orderDatesService.save(orderDatesDto), HttpStatus.CREATED);
     }
 
@@ -40,7 +38,7 @@ public class OrderDatesController {
 
     @GetMapping("/findAll")
     @ApiOperation("Вывод всех")
-    ResponseEntity<List<OrderDatesDto>> findAll() {
+    ResponseEntity<List<DayDto>> findAll() {
         return ResponseEntity.ok(orderDatesService.findAll());
     }
 
